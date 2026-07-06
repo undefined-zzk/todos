@@ -71,4 +71,15 @@ watch(
   background: linear-gradient(90deg, var(--primary), #8a6bff);
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+@media (max-width: 640px) {
+  .todo-stats { padding: 14px; }
+  .todo-stats__value { font-size: 16px; }
+  .todo-stats__pct { font-size: 12px; }
+}
+@media (max-width: 480px) {
+  .todo-stats { padding: 12px; }
+  .todo-stats__value { font-size: 15px; }
+  .todo-stats__track { height: 6px; }
+}
 </style>

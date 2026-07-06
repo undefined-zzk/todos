@@ -45,7 +45,7 @@
 // social buttons. Plays an animejs entrance on mount. On a successful
 // login (local or OAuth), redirects to the home page.
 const { enterElement, shake } = useAnime()
-const { error: authError, clearError } = useAuth()
+const { error: authError, clearError, isAuthenticated } = useAuth()
 const cardRef = ref<HTMLElement | null>(null)
 const alertRef = ref<HTMLElement | null>(null)
 
@@ -63,16 +63,26 @@ onMounted(() => {
   }
 })
 
-useHead({ title: '登录 · Todos' })
+// 已登录用户直接跳转到首页
+if (isAuthenticated.value) {
+  navigateTo('/')
+}
+
+useHead({
+  bodyAttrs: {
+    style: 'overflow: hidden; height: 100vh;'
+  },
+  title: '登录 · Todos'
+})
 </script>
 
 <style scoped>
 .login-page {
-  min-height: calc(100vh - 64px);
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  overflow: hidden;
 }
 .login-page__card {
   width: 100%;
@@ -153,7 +163,16 @@ useHead({ title: '登录 · Todos' })
   transform: translateY(-8px);
 }
 
+@media (max-width: 640px) {
+  .login-page__card { padding: 24px; gap: 16px; }
+  .login-page__title { font-size: 20px; }
+  .login-page__subtitle { font-size: 13px; }
+  .login-page__logo { width: 42px; height: 42px; border-radius: 12px; }
+}
 @media (max-width: 480px) {
-  .login-page__card { padding: 24px; }
+  .login-page__card { padding: 20px; gap: 14px; border-radius: 16px; }
+  .login-page__title { font-size: 18px; }
+  .login-page__subtitle { font-size: 12px; }
+  .login-page__logo { width: 38px; height: 38px; border-radius: 10px; margin-bottom: 10px; }
 }
 </style>

@@ -5,13 +5,13 @@
 -- 确保行级安全已启用
 alter table public.todo enable row level security;
 
--- 删除可能存在的旧策略,再创建开放的演示策略
+-- 删除可能存在的旧策略,再创建仅认证用户可用的策略
 drop policy if exists "todo public read" on public.todo;
 drop policy if exists "todo public insert" on public.todo;
 drop policy if exists "todo public update" on public.todo;
 drop policy if exists "todo public delete" on public.todo;
 
-create policy "todo public read"   on public.todo for select using (true);
-create policy "todo public insert" on public.todo for insert with check (true);
-create policy "todo public update" on public.todo for update using (true) with check (true);
-create policy "todo public delete" on public.todo for delete using (true);
+create policy "todo auth read"   on public.todo for select using (auth.role() = 'authenticated');
+create policy "todo auth insert" on public.todo for insert with check (auth.role() = 'authenticated');
+create policy "todo auth update" on public.todo for update using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+create policy "todo auth delete" on public.todo for delete using (auth.role() = 'authenticated');

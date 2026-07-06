@@ -31,7 +31,7 @@
 <script setup lang="ts">
 // Todos home page. Composes the input, filter, stats, batch toolbar and
 // list, then plays a staggered entrance animation on mount via animejs.
-const { user } = useAuth()
+const { user, isAuthenticated } = useAuth()
 const { init } = useTodos()
 const { enterPage, enterElement } = useAnime()
 
@@ -48,11 +48,17 @@ const greeting = computed(() => {
   return '晚上好'
 })
 
-onMounted(() => {
+onMounted(async () => {
+  if (!isAuthenticated.value) {
+    await navigateTo('/login')
+    return
+  }
   init()
   // Staggered entrance of the major page sections.
   enterPage([headRef.value, statsRef.value, inputRef.value, listWrapRef.value].filter(Boolean) as HTMLElement[])
 })
+
+definePageMeta({ middleware: 'auth' })
 
 useHead({ title: 'Todos · 待办事项' })
 </script>
@@ -79,5 +85,17 @@ useHead({ title: 'Todos · 待办事项' })
   margin-top: 6px;
   font-size: 14px;
   color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .todos-page { gap: 14px; }
+  .todos-page__title { font-size: 22px; }
+  .todos-page__subtitle { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .todos-page { gap: 12px; }
+  .todos-page__title { font-size: 20px; }
+  .todos-page__subtitle { font-size: 12px; }
+  .todos-page__head { flex-direction: column; align-items: stretch; gap: 12px; }
 }
 </style>

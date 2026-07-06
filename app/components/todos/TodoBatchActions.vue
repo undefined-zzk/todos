@@ -168,4 +168,17 @@ async function onClearCompleted() {
   opacity: 0;
   transform: translateY(-6px);
 }
+
+@media (max-width: 640px) {
+  .batch { padding: 10px 12px; gap: 10px; }
+  .batch__actions { gap: 6px; }
+  .batch__btn { height: 32px; padding: 0 10px; font-size: 12px; }
+  .batch__select { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .batch { flex-direction: column; align-items: stretch; }
+  .batch__select { justify-content: center; }
+  .batch__actions { margin-left: 0; justify-content: stretch; }
+  .batch__btn { flex: 1; min-width: 0; }
+}
 </style>

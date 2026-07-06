@@ -324,4 +324,21 @@ function onDelete() {
   color: var(--danger);
 }
 .icon-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 640px) {
+  .todo-item { padding: 12px; gap: 10px; }
+  .todo-item__title { font-size: 14px; }
+  .todo-item__desc { font-size: 12px; }
+  .icon-btn { width: 30px; height: 30px; }
+}
+@media (max-width: 480px) {
+  .todo-item { padding: 10px; gap: 8px; }
+  .todo-item__title { font-size: 13px; }
+  .todo-item__meta { flex-wrap: wrap; gap: 6px; }
+  .todo-item__actions { gap: 2px; }
+  .icon-btn { width: 28px; height: 28px; }
+  .icon-btn svg { width: 14px; height: 14px; }
+  .todo-item__edit { height: 34px; font-size: 13px; }
+  .todo-item__edit--desc { height: 30px; font-size: 12px; }
+}
 </style>

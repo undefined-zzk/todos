@@ -92,4 +92,14 @@ function onSelect(value: TodoFilterType) {
   background: var(--primary-soft);
   color: var(--primary);
 }
+
+@media (max-width: 640px) {
+  .todo-filter { gap: 2px; padding: 3px; }
+  .todo-filter__tab { height: 30px; padding: 0 12px; font-size: 13px; gap: 6px; }
+  .todo-filter__count { min-width: 18px; height: 18px; font-size: 11px; }
+}
+@media (max-width: 480px) {
+  .todo-filter__tab { padding: 0 10px; font-size: 12px; }
+  .todo-filter__count { display: none; }
+}
 </style>

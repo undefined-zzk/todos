@@ -314,4 +314,20 @@ onMounted(() => emailRef.value?.focus())
   animation: spin 0.7s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 640px) {
+  .login-form { gap: 14px; }
+  .field__control { height: 42px; }
+  .field__input { font-size: 14px; }
+  .field__icon { margin: 0 10px; }
+  .login-form__submit { height: 42px; font-size: 14px; }
+  .social__btn { height: 42px; font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .login-form { gap: 12px; }
+  .field__control { height: 40px; }
+  .login-form__submit { height: 40px; font-size: 13px; }
+  .social__btn { height: 40px; font-size: 13px; }
+  .login-form__row { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
 </style>

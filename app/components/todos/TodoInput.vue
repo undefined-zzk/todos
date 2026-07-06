@@ -166,4 +166,18 @@ async function onSubmit() {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+@media (max-width: 640px) {
+  .todo-input { padding: 12px; }
+  .todo-input__field { height: 40px; font-size: 14px; }
+  .todo-input__select { height: 40px; font-size: 13px; padding: 0 8px; }
+  .todo-input__btn { height: 40px; padding: 0 16px; font-size: 13px; }
+  .todo-input__desc { height: 36px; font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .todo-input__row { flex-wrap: wrap; }
+  .todo-input__field { flex: 1 1 100%; }
+  .todo-input__select { flex: 1; }
+  .todo-input__btn { flex: 1; }
+}
 </style>

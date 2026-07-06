@@ -132,6 +132,12 @@ a {
   margin: 0 auto;
   padding: 0 20px;
 }
+@media (max-width: 640px) {
+  .app-container { padding: 0 14px; }
+}
+@media (max-width: 480px) {
+  .app-container { padding: 0 12px; }
+}
 
 .sr-only {
   position: absolute;

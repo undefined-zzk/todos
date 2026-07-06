@@ -92,6 +92,18 @@ async function onLogout() {
   white-space: nowrap;
 }
 
+@media (max-width: 640px) {
+  .header__inner { height: 56px; }
+  .header__title { font-size: 16px; }
+  .header__user { display: none; }
+}
+@media (max-width: 480px) {
+  .header__inner { height: 50px; }
+  .header__logo { width: 28px; height: 28px; border-radius: 8px; }
+  .header__title { font-size: 15px; }
+  .btn { height: 34px; padding: 0 12px; font-size: 13px; }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
