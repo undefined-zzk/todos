@@ -1,5 +1,5 @@
 <template>
-  <form class="login-form" @submit.prevent="onSubmit" novalidate ref="rootRef">
+  <form class="login-form" @submit.prevent="onSubmit" novalidate autocomplete="on" ref="rootRef">
     <div v-if="mode === 'register'" class="field" :class="{ 'has-error': errors.name }">
       <label class="field__label" for="login-name">昵称（可选）</label>
       <div class="field__control">
@@ -11,6 +11,7 @@
           id="login-name"
           v-model.trim="name"
           type="text"
+          name="name"
           class="field__input"
           :class="{ 'is-invalid': errors.name }"
           placeholder="怎么称呼你"
@@ -33,6 +34,7 @@
           id="login-email"
           v-model.trim="email"
           type="email"
+          name="email"
           class="field__input"
           :class="{ 'is-invalid': errors.email }"
           placeholder="you@example.com"
@@ -55,6 +57,7 @@
           id="login-password"
           v-model="password"
           :type="showPassword ? 'text' : 'password'"
+          name="password"
           class="field__input"
           :class="{ 'is-invalid': errors.password }"
           :placeholder="mode === 'register' ? '至少 6 位' : '请输入密码'"
@@ -105,6 +108,8 @@
 // Validation errors trigger a shake animation via useAnime.
 const emit = defineEmits<{ (e: 'success'): void }>()
 
+import { storage } from '~/utils/storage'
+
 const { login, register, loading, error: authError, clearError } = useAuth()
 const { shake, pressFeedback } = useAnime()
 
@@ -113,9 +118,12 @@ const emailRef = ref<HTMLInputElement | null>(null)
 const emailErrRef = ref<HTMLElement | null>(null)
 const passwordErrRef = ref<HTMLElement | null>(null)
 
+const REMEMBER_KEY = 'remembered_email'
+const savedEmail = storage.get(REMEMBER_KEY, '')
+
 const mode = ref<'login' | 'register'>('login')
 const name = ref('')
-const email = ref('')
+const email = ref(savedEmail)
 const password = ref('')
 const remember = ref(true)
 const showPassword = ref(false)
@@ -186,6 +194,11 @@ async function onSubmit() {
       : await login({ email: email.value, password: password.value, remember: remember.value })
 
   if (result) {
+    if (remember.value) {
+      storage.set(REMEMBER_KEY, email.value)
+    } else {
+      storage.remove(REMEMBER_KEY)
+    }
     emit('success')
   }
 }

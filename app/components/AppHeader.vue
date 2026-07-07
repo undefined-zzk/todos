@@ -13,7 +13,17 @@
 
       <div class="header__actions">
         <template v-if="isAuthenticated && user">
-          <span class="header__user" :title="user.email">{{ user.name }}</span>
+          <div class="header__user">
+            <span v-if="user.avatar" class="header__avatar">
+              <img :src="user.avatar" :alt="user.name" />
+            </span>
+            <span v-else class="header__avatar header__avatar--fallback" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                <path d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM4 20c0-4 3-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="header__name" :title="user.email">{{ user.name }}</span>
+          </div>
           <button class="btn btn--ghost" @click="onLogout" :disabled="loading">
             退出
           </button>
@@ -84,9 +94,33 @@ async function onLogout() {
   gap: 12px;
 }
 .header__user {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.header__avatar {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.header__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.header__avatar--fallback {
+  display: inline-grid;
+  place-items: center;
+  background: var(--surface-2);
+  color: var(--text-subtle);
+  border: 1px solid var(--border);
+}
+.header__name {
   font-size: 14px;
   color: var(--text-muted);
-  max-width: 160px;
+  max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

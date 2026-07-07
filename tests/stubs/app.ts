@@ -177,6 +177,9 @@ const auth = {
   getUser: vi.fn(async () => ({
     data: { user: authUser }
   })),
+  getSession: vi.fn(async () => ({
+    data: { session: authUser ? { user: authUser, access_token: 'fake-token' } : null }
+  })),
   onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: () => {} } } }))
 }
 
@@ -210,4 +213,5 @@ export function __resetState() {
   auth.signInWithOAuth.mockClear()
   auth.signOut.mockClear()
   auth.getUser.mockClear()
+  auth.getSession.mockClear()
 }

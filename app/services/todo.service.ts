@@ -91,9 +91,14 @@ export const todoService = {
 
   async create(payload: TodoCreatePayload): Promise<ApiResponse<Todo>> {
     const supabase = getSupabase()
+    const { data: { session } } = await supabase.auth.getSession()
+    const insertData = toInsert(payload) as Record<string, unknown>
+    if (session?.user?.id) {
+      insertData.user_id = session.user.id
+    }
     const { data, error } = await supabase
       .from('todo')
-      .insert(toInsert(payload))
+      .insert(insertData)
       .select('id,title,description,created_at')
       .single()
     if (error) return fail<Todo>({} as Todo, error.message, Number(error.code) || 500)

@@ -1,11 +1,16 @@
 export default defineNuxtRouteMiddleware(async (to) => {
   if (!import.meta.client) return
-  if (to.path === '/login') return
+
+  // Skip auth check on initial page load to prevent hydration mismatch.
+  // Auth is handled in the layout's onMounted after hydration completes.
+  if (window.location.pathname === to.path) {
+    return
+  }
 
   const supabase = useNuxtApp().$supabase
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
 
-  if (!user) {
+  if (!session) {
     return navigateTo('/login')
   }
 })

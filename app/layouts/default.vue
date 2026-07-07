@@ -13,10 +13,17 @@
 <script setup lang="ts">
 // Default layout: header + page slot + footer.
 // Initialises auth on client mount so every page knows the login state.
-const { init } = useAuth()
+const { init, isAuthenticated } = useAuth()
 
-onMounted(() => {
-  init()
+onMounted(async () => {
+  await init()
+
+  const route = useRoute()
+  if (route.path === '/login' && isAuthenticated.value) {
+    navigateTo('/')
+  } else if (route.path !== '/login' && !isAuthenticated.value) {
+    navigateTo('/login')
+  }
 })
 </script>
 
@@ -29,6 +36,8 @@ onMounted(() => {
 .layout__main {
   flex: 1;
   padding: 32px 0 48px;
+  display: flex;
+  flex-direction: column;
 }
 .layout__footer {
   padding: 24px 20px 32px;

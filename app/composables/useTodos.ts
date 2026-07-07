@@ -118,7 +118,6 @@ export function useTodos() {
   }
 
   async function remove(id: string) {
-    mutating.value = true
     error.value = null
     try {
       const res = await todoService.remove(id)
@@ -133,8 +132,6 @@ export function useTodos() {
     } catch (e) {
       error.value = (e as { message?: string })?.message ?? '删除失败'
       return false
-    } finally {
-      mutating.value = false
     }
   }
 
@@ -173,7 +170,6 @@ export function useTodos() {
   async function batchDelete() {
     const ids = [...selectedIds.value]
     if (ids.length === 0) return
-    mutating.value = true
     error.value = null
     try {
       await Promise.all(ids.map(id => todoService.remove(id)))
@@ -182,8 +178,6 @@ export function useTodos() {
       persist()
     } catch (e) {
       error.value = (e as { message?: string })?.message ?? '批量删除失败'
-    } finally {
-      mutating.value = false
     }
   }
 

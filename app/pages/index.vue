@@ -31,9 +31,9 @@
 <script setup lang="ts">
 // Todos home page. Composes the input, filter, stats, batch toolbar and
 // list, then plays a staggered entrance animation on mount via animejs.
-const { user, isAuthenticated } = useAuth()
+const { user } = useAuth()
 const { init } = useTodos()
-const { enterPage, enterElement } = useAnime()
+const { enterPage } = useAnime()
 
 const headRef = ref<HTMLElement | null>(null)
 const statsRef = ref<HTMLElement | null>(null)
@@ -48,11 +48,7 @@ const greeting = computed(() => {
   return '晚上好'
 })
 
-onMounted(async () => {
-  if (!isAuthenticated.value) {
-    await navigateTo('/login')
-    return
-  }
+onMounted(() => {
   init()
   // Staggered entrance of the major page sections.
   enterPage([headRef.value, statsRef.value, inputRef.value, listWrapRef.value].filter(Boolean) as HTMLElement[])
@@ -69,6 +65,7 @@ useHead({ title: 'Todos · 待办事项' })
   flex-direction: column;
   gap: 18px;
 }
+
 .todos-page__head {
   display: flex;
   align-items: flex-end;
@@ -76,11 +73,13 @@ useHead({ title: 'Todos · 待办事项' })
   gap: 16px;
   flex-wrap: wrap;
 }
+
 .todos-page__title {
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 0.2px;
 }
+
 .todos-page__subtitle {
   margin-top: 6px;
   font-size: 14px;
@@ -88,14 +87,36 @@ useHead({ title: 'Todos · 待办事项' })
 }
 
 @media (max-width: 640px) {
-  .todos-page { gap: 14px; }
-  .todos-page__title { font-size: 22px; }
-  .todos-page__subtitle { font-size: 13px; }
+  .todos-page {
+    gap: 14px;
+  }
+
+  .todos-page__title {
+    font-size: 22px;
+  }
+
+  .todos-page__subtitle {
+    font-size: 13px;
+  }
 }
+
 @media (max-width: 480px) {
-  .todos-page { gap: 12px; }
-  .todos-page__title { font-size: 20px; }
-  .todos-page__subtitle { font-size: 12px; }
-  .todos-page__head { flex-direction: column; align-items: stretch; gap: 12px; }
+  .todos-page {
+    gap: 12px;
+  }
+
+  .todos-page__title {
+    font-size: 20px;
+  }
+
+  .todos-page__subtitle {
+    font-size: 12px;
+  }
+
+  .todos-page__head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
 }
 </style>

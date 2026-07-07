@@ -57,31 +57,26 @@ watch(authError, (v) => {
   if (v && alertRef.value) shake(alertRef.value)
 })
 
+watch(isAuthenticated, (val) => {
+  if (val) {
+    navigateTo('/')
+  }
+}, { immediate: true })
+
 onMounted(() => {
   if (cardRef.value) {
     enterElement(cardRef.value, 100)
   }
 })
 
-// 已登录用户直接跳转到首页
-if (isAuthenticated.value) {
-  navigateTo('/')
-}
-
-useHead({
-  bodyAttrs: {
-    style: 'overflow: hidden; height: 100vh;'
-  },
-  title: '登录 · Todos'
-})
+useHead({ title: '登录 · Todos' })
 </script>
 
 <style scoped>
 .login-page {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1;
+  display: grid;
+  place-items: center;
   overflow: hidden;
 }
 .login-page__card {

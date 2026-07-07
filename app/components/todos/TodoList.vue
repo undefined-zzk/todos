@@ -14,8 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import type { TodoFilterType } from '~/types'
-
 // Renders the filtered list and orchestrates entrance/leave animations.
 // Items expose their root via a `data-id` attribute so newly added items
 // can be animated individually without coupling to component internals.
