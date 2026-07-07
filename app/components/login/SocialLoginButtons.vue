@@ -9,9 +9,9 @@
       :disabled="loading"
       @click="onClick(p.id)"
     >
-      <span v-if="pendingProvider === p.id" class="social__spinner" aria-hidden="true"></span>
+      <span v-if="loading" class="social__spinner" aria-hidden="true"></span>
       <span v-else class="social__icon" v-html="p.icon" aria-hidden="true"></span>
-      <span class="social__label">{{ p.label }}</span>
+      <span class="social__label">{{loading ? '跳转中' : p.label }}</span>
     </button>
   </div>
 </template>
